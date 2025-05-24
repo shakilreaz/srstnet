@@ -1,0 +1,56 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: radius
+      MYSQL_USER: radius
+      MYSQL_PASSWORD: radiuspass
+    volumes:
+      - radius-mysql:/var/lib/mysql
+
+  freeradius:
+    image: freeradius/freeradius-server
+    restart: always
+    ports:
+      - "1812:1812/udp"
+      - "1813:1813/udp"
+    volumes:
+      - freeradius-config:/etc/raddb
+
+  backend:
+    image: php:apache
+    restart: always
+    ports:
+      - "9000:80"
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      - mysql
+
+  admin-ui:
+    image: nginx
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./admin:/usr/share/nginx/html:ro
+
+  caddy:
+    image: caddy
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  radius-mysql:
+  freeradius-config:
+  caddy_data:
+  caddy_config:

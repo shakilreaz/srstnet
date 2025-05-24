@@ -1,0 +1,19 @@
+SRST Network Full System Setup Guide
+
+1. Portainer:
+   - Go to Stacks > Add Stack
+   - Upload all files and deploy
+
+2. MikroTik:
+   - Upload 'login.html' to /hotspot
+   - Configure RADIUS (IP, Secret, Service: hotspot)
+
+3. Domain:
+   - Point 'srstnetwork.xyz' to your public IP (A record)
+   - Ensure port 80/443 is open
+
+4. Access:
+   - https://srstnetwork.xyz (User Login & Registration)
+   - https://srstnetwork.xyz/admin (Admin Panel)
+
+Note: WhatsApp API & Backend PHP files use UltraMsg sandbox.

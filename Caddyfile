@@ -1,0 +1,9 @@
+srstnetwork.xyz {
+  reverse_proxy backend:80
+  encode gzip
+  tls your-email@example.com
+}
+
+srstnetwork.xyz/admin {
+  reverse_proxy admin-ui:80
+}
